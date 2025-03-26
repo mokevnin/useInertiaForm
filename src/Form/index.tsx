@@ -16,6 +16,7 @@ export interface FormProps<TForm> extends PartialHTMLForm {
 	to: string
 	async?: boolean
 	resetAfterSubmit?: boolean
+	preserveState?: boolean
 	remember?: boolean
 	railsAttributes?: boolean
 	filter?: string[]
@@ -35,6 +36,7 @@ const Form = <TForm extends NestedObject>({
 	method = "post",
 	to,
 	async = false,
+	preserveState = true,
 	resetAfterSubmit,
 	remember = true,
 	filter,
@@ -85,6 +87,7 @@ const Form = <TForm extends NestedObject>({
 		e.stopPropagation()
 
 		const submitOptions: Partial<VisitOptions> = {
+			preserveState,
 			onSuccess: () => {
 				if(resetAfterSubmit || (resetAfterSubmit !== false && async === true)) {
 					form.reset()
